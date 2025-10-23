@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TTW Restaurant</title>
+  <link rel="stylesheet" href="./text.css">
+</head>
+<body>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#menu">Menu</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <header>
+    <h1>Welcome to <abbr title="Taste The World">TTW</abbr> Restaurant</h1>
+    <h3>“Taste all the famous food of the world at one place!”</h3>
+    <figure>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_oW7CYtiAYrlHe1uc2VqO2aydRlcEvwC66w&s" 
+           alt="TTW Restaurant" width="300">
+    </figure>
+    <p id="greeting"></p>
+  </header>
+
+  <main>
+    <section id="about">
+      <h2>About TTW</h2>
+      <p>“Taste the World” restaurant lets you enjoy the world’s best dishes all in one place!</p>
+      <details>
+        <summary>About the Owner</summary>
+        <p>The owner is a visionary entrepreneur passionate about bringing global flavors together.</p>
+      </details>
+    </section>
+
+    <section id="menu">
+      <h2>Our Menu</h2>
+      <div id="filterSection">
+        <button onclick="filterMenu('veg')">Veg</button>
+        <button onclick="filterMenu('nonveg')">Non-Veg</button>
+        <button onclick="filterMenu('all')">All</button>
+      </div>
+
+      <table id="menuTable">
+        <thead>
+          <tr><th>Item</th><th>Type</th><th>Price (₹)</th></tr>
+        </thead>
+        <tbody>
+          <tr class="veg"><td>Veg Biryani</td><td>Veg</td><td>100</td></tr>
+          <tr class="veg"><td>Paneer Curry</td><td>Veg</td><td>120</td></tr>
+          <tr class="nonveg"><td>Chicken Biryani</td><td>Non-Veg</td><td>150</td></tr>
+          <tr class="nonveg"><td>Mutton Curry</td><td>Non-Veg</td><td>250</td></tr>
+        </tbody>
+      </table>
+
+      <p id="suggestion"></p>
+      <button onclick="suggestDish()">Suggest Me a Dish 🍲</button>
+    </section>
+
+    <section id="contact">
+      <h2>Contact Us</h2>
+      <form id="contactForm" onsubmit="return validateForm()">
+        <label>Name: <input type="text" id="name"></label><br><br>
+        <label>Email: <input type="email" id="email"></label><br><br>
+        <label>Message: <textarea id="message"></textarea></label><br><br>
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
+
+    <button id="backToTop" onclick="scrollToTop()">⬆</button>
+  </main>
+
+  <footer>
+    <p>© 2025 Taste The World Restaurant | All rights reserved</p>
+  </footer>
+
+  <script>
+    const greeting = document.getElementById("greeting");
+    const hour = new Date().getHours();
+    if (hour < 12) greeting.textContent = "Good Morning! Start your day with a delicious meal.";
+    else if (hour < 18) greeting.textContent = "Good Afternoon! Treat yourself to a great lunch.";
+    else greeting.textContent = "Good Evening! Enjoy your dinner at TTW.";
+
+    function filterMenu(type){
+      const rows = document.querySelectorAll("#menuTable tbody tr");
+      rows.forEach(row => {
+        if (type === "all" || row.classList.contains(type)) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+    })};
+    
+    function suggestDish() {
+      const dishes = ["Chicken Biryani", "Veg Biryani", "Paneer Curry", "Mutton Curry"];
+      const randomDish = dishes[Math.floor(Math.random() * dishes.length)];
+      document.getElementById("suggestion").textContent = `You should try our special: ${randomDish}!`;
+    }
+
+    function validateForm() {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      if (!name || !email || !message) {
+        alert("Please fill in all fields.");
+        return false;
+      }
+      alert("Thank you! Your message has been sent successfully.");
+      return true;
+    }
+
+    // ⬆ Smooth Scroll to Top
+    const backToTop = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => {
+      backToTop.style.display = window.scrollY > 200 ? "block" : "none";
+    });
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  </script>
+</body>
+</html>
